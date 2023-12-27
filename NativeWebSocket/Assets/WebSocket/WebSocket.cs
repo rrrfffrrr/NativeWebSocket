@@ -84,7 +84,7 @@ namespace NativeWebSocket
     public delegate void WebSocketOpenEventHandler();
     public delegate void WebSocketMessageEventHandler(byte[] data);
     public delegate void WebSocketErrorEventHandler(string errorMsg);
-    public delegate void WebSocketCloseEventHandler(WebSocketCloseCode closeCode);
+    public delegate void WebSocketCloseEventHandler(int closeCode);
 
     public enum WebSocketCloseCode
     {
@@ -476,7 +476,7 @@ namespace NativeWebSocket
             catch (Exception ex)
             {
                 OnError?.Invoke(ex.Message);
-                OnClose?.Invoke(WebSocketCloseCode.Abnormal);
+                OnClose?.Invoke((int)WebSocketCloseCode.Abnormal);
             }
             finally
             {
@@ -640,7 +640,7 @@ namespace NativeWebSocket
 
         public async Task Receive()
         {
-            WebSocketCloseCode closeCode = WebSocketCloseCode.Abnormal;
+            int closeCode = (int)WebSocketCloseCode.Abnormal;
             await new WaitForBackgroundThread();
 
             ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[8192]);
@@ -684,7 +684,7 @@ namespace NativeWebSocket
                         else if (result.MessageType == WebSocketMessageType.Close)
                         {
                             await Close();
-                            closeCode = WebSocketHelpers.ParseCloseCodeEnum((int)result.CloseStatus);
+                            closeCode = result.CloseStatus;
                             break;
                         }
                     }
