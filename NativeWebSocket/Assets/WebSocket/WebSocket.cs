@@ -670,7 +670,7 @@ namespace NativeWebSocket
                         else if (result.MessageType == WebSocketMessageType.Close)
                         {
                             await Close();
-                            closeCode = result.CloseStatus;
+                            closeCode = (int)result.CloseStatus;
                             break;
                         }
                     }
