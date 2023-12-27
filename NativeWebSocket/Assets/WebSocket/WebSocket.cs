@@ -125,20 +125,6 @@ namespace NativeWebSocket
 
     public static class WebSocketHelpers
     {
-        public static WebSocketCloseCode ParseCloseCodeEnum(int closeCode)
-        {
-
-            if (WebSocketCloseCode.IsDefined(typeof(WebSocketCloseCode), closeCode))
-            {
-                return (WebSocketCloseCode)closeCode;
-            }
-            else
-            {
-                return WebSocketCloseCode.Undefined;
-            }
-
-        }
-
         public static WebSocketException GetErrorMessageFromCode(int errorCode, Exception inner)
         {
             switch (errorCode)
