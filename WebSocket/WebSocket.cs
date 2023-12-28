@@ -342,7 +342,7 @@ namespace NativeWebSocket
     }
 
     public void DelegateOnCloseEvent (int closeCode) {
-      this.OnClose?.Invoke (WebSocketHelpers.ParseCloseCodeEnum (closeCode));
+      this.OnClose?.Invoke (closeCode);
     }
 
   }
